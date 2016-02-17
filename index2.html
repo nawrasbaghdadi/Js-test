@@ -1,0 +1,90 @@
+<html>
+	<head>
+		<title></title>
+	
+
+	</head>
+	<body>
+		<h1>Hello</h1>
+	<input type="text" value = "1" readonly/>
+	<input type="text" value = "2" readonly/>
+	<input type="text" value = "200" readonly/>
+	<input type="text" value = "10" readonly/>
+	<input type="text" value = "5" readonly/>
+	<input type="text" value = "6" readonly/>
+<script>
+/*1 Every DOM Node has a read-only property named `nodeType`, i.e. a nodeType valued `3` means it’s a `Text` node. Given an arbitrary DOM Node, write a function that finds all nested Text nodes and returns them in no particular order as an array.*/
+	function readonlyInputs (arrOrder) {
+		var readonlyArray = [];
+		var nodes = document.querySelectorAll("input[type=text]");
+		for (var i=0; i<nodes.length; i+=1){
+			if(nodes[i].readOnly){
+				readonlyArray.push(nodes[i].defaultValue);
+			}
+		}
+		if (arrOrder){
+			if(arrOrder.toUpperCase() === 'ASC'){
+				readonlyArray=readonlyArray.sort(function(a, b){return a-b});	
+			}else if(arrOrder.toUpperCase() === 'DES'){
+				readonlyArray=readonlyArray.sort(function(a, b){return b-a});	
+			}
+			
+		}else{
+			return("Please enter Array Order , \'ASC\' OR \'DES\'");;
+		}
+		return readonlyArray;
+	}
+	var ss = readonlyInputs();
+	console.log(ss);
+//////////////////////////////////////////////////
+	var trie = function() {
+    this.head = {};
+};
+ 
+trie.prototype.validate = function(word) { 
+    if((word === undefined) || (word === null)) throw "The given word is invalid.";
+    if (typeof word !== "string") throw "The given word is not a string";
+}
+ 
+trie.prototype.add = function(word) {
+    this.validate(word);
+ 
+    var current = this.head;
+ 
+    for (var i = 0; i < word.length; i+=1) { 
+        if(!(word[i] in current)) {
+            current[word[i]] = {};
+        }
+ 
+        current = current[word[i]]
+    };
+ 
+    current.$ = 1; 
+};
+//////
+trie.prototype.hasString = function(word) {
+    this.validate(word);
+ 
+    var current = this.head;
+ 
+    for (var i = 0; i < word.length; i++) { 
+        if(!(word[i] in current)) {
+            return current[word[i]] ;
+        }
+        current = current[word[i]];
+    };
+ 	
+    return current; 
+};
+
+var arr = ["bear", "bears", "bearing", "beer", "boar"];
+	var dd = new trie();
+	arr.forEach(function(ele){
+		dd.add(ele);
+	})
+	console.log(dd);
+	console.log(dd.hasString('ss'));
+</script>
+
+	</body>
+</html>
